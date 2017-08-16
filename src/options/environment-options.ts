@@ -1,3 +1,3 @@
 export interface IEnvironmentOptions {
-    interactionRate?: number;
+  interactionRate?: number;
 }
