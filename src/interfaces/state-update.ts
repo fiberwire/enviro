@@ -1,5 +1,5 @@
 
 export interface IStateUpdate<State> {
-    interaction: number;
+    iteration: number;
     state: State;
 }
