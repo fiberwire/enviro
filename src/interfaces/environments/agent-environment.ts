@@ -1,5 +1,5 @@
 import { Observable, Subject } from "rxjs/Rx";
-import { IAgentUpdate, IEnvironment, IStateUpdate } from '../index';
+import { IAgentUpdate, IEnvironment, IStateUpdate } from '../../index';
 
 export interface IAgentEnvironment<AState, EState>
   extends IEnvironment<EState> {

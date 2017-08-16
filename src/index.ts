@@ -1,9 +1,9 @@
 import { AgentEnvironment } from './environments/agent-environment';
 import { DirectEnvironment } from './environments/direct-environment';
 import { IAgent } from './interfaces/agent';
-import { IAgentEnvironment } from './interfaces/agent-environment';
 import { IAgentUpdate } from './interfaces/agent-update';
-import { IEnvironment } from './interfaces/environment';
+import { IAgentEnvironment } from "./interfaces/environments/agent-environment";
+import { IEnvironment } from "./interfaces/environments/environment";
 import { IHistorical } from './interfaces/historical';
 import { IInteraction } from './interfaces/interaction';
 import { IStateUpdate } from './interfaces/state-update';
@@ -17,13 +17,16 @@ export { ReactiveProperty, ReactiveCollection };
 export { AgentEnvironment, DirectEnvironment };
 
 export {
-  IEnvironment,
-  IAgentEnvironment,
   IHistorical,
   IStateUpdate,
   IAgentUpdate,
   IInteraction,
 };
+
+export {
+  IEnvironment,
+  IAgentEnvironment,
+}
 
 export { IAgent };
 
