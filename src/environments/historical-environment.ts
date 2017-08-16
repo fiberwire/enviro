@@ -1,7 +1,10 @@
 import {
+  History,
   IEnvironment,
   IHistorical,
   IHistoricalOptions,
+  IHistoryOptions,
+  IPersistenceOptions,
   IStateUpdate,
   ReactiveCollection,
   ReactiveProperty,
@@ -13,30 +16,24 @@ import { Observable, Subject, Subscription } from 'rxjs/Rx';
 
 export abstract class HistoricalEnvironment<EState> extends DirectEnvironment<
   EState
-> implements IHistorical<IStateUpdate<EState>>, IEnvironment<EState> {
-  public history: ReactiveCollection<IStateUpdate<EState>>;
+  > implements IHistorical<IStateUpdate<EState>>, IEnvironment<EState> {
+  public history: History<IStateUpdate<EState>>;
   public state: ReactiveProperty<IStateUpdate<EState>>;
   public incomingStates: Subject<IStateUpdate<EState>>;
   public initialState: IStateUpdate<EState>;
 
-  constructor(public options: IHistoricalOptions) {
+  constructor(public options: IHistoricalOptions, public historyOptions: IHistoryOptions) {
     super(options);
 
-    this.history = new ReactiveCollection();
+    this.history = new History(historyOptions);
 
     this.subs.add(this.recordHistory());
   }
 
   private recordHistory(): Subscription {
-    return this.state.subscribe(s => {
-      this.history.push(s);
-
-      if (this.history.value.length > this.options.historyLength) {
-        this.history.value = _.takeRight(
-          this.history.value,
-          this.options.historyLength
-        );
-      }
-    });
+    return this.state
+      .subscribe(s => {
+        this.history.record(s);
+      });
   }
 }
