@@ -1,11 +1,13 @@
-import { Observable, Subject, Subscription } from "rxjs/Rx";
+import { Observable, Subject, Subscription } from 'rxjs/Rx';
 import { IAgentUpdate, IEnvironment, IStateUpdate } from '../../index';
 
 export interface IAgentEnvironment<AState, EState>
   extends IEnvironment<EState> {
   incomingInteractions: Subject<IAgentUpdate<AState>>;
 
-  applyInteractions(interactionBuffer: Array<IAgentUpdate<AState>>): IStateUpdate<EState>;
+  applyInteractions(
+    interactionBuffer: Array<IAgentUpdate<AState>>
+  ): IStateUpdate<EState>;
 
   bufferInteractions(
     interactionsPerSecond: number,
