@@ -3,14 +3,19 @@
   "version": "0.0.0",
   "description": "enviro",
   "license": "MIT",
-  "repository": "",
+  "repository": "http://www.github.com/fiberwire/enviro.git",
   "author": {
-    "name": "",
-    "email": "",
+    "name": "Andrew Ramos",
+    "email": "andrew.ramos92@gmail.com",
     "url": ""
   },
   "keywords": [
-    ""
+    "environment",
+    "async",
+    "asynchronous",
+    "state",
+    "container",
+    "reactive"
   ],
   "files": [
     "lib"
