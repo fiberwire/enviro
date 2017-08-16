@@ -1,4 +1,3 @@
-
 export interface IHistoryOptions {
-    maxLength: number;
+  maxLength: number;
 }

@@ -7,7 +7,7 @@ export class History<T> implements IHistory<T> {
     return this.history.value.length;
   }
   public get newest(): T {
-    return this.history.value[this.history.value.length-1];
+    return this.history.value[this.history.value.length - 1];
   }
 
   public get oldest(): T {
@@ -15,7 +15,7 @@ export class History<T> implements IHistory<T> {
   }
 
   constructor(public options: IHistoryOptions) {
-    this.history.subscribeToRemove((r) => {
+    this.history.subscribeToRemove(r => {
       this.handleOldRecords(r);
     });
   }
@@ -27,7 +27,7 @@ export class History<T> implements IHistory<T> {
 
   // add records to the history
   public record(value: T): T {
-    while (this.length + 1 > this.options.maxLength){
+    while (this.length + 1 > this.options.maxLength) {
       this.remove(this.oldest);
     }
 
@@ -41,7 +41,7 @@ export class History<T> implements IHistory<T> {
     return this.history.value.filter(f);
   }
 
-  public remove(value: T) : T {
+  public remove(value: T): T {
     this.history.remove(value);
     return value;
   }

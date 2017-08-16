@@ -3,7 +3,7 @@ import { IHistoryOptions, ReactiveCollection } from '../index';
 export interface IHistory<T> {
   history: ReactiveCollection<T>;
   length: number;
-  options: IHistoryOptions
+  options: IHistoryOptions;
 
   newest: T;
   oldest: T;
