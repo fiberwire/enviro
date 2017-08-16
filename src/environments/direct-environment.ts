@@ -12,11 +12,12 @@ export abstract class DirectEnvironment<EState> implements IEnvironment<EState> 
 
   public abstract get initialState(): IStateUpdate<EState>;
 
-  public subs: Subscription = new Subscription();
+  public subs: Subscription;
 
   constructor(public options: IEnvironmentOptions) {
     this.state.value = this.initialState;
     this.incomingStates = new Subject();
+    this.subs = new Subscription();
 
     this.subs
       .add(this.update(this.incomingStates));
