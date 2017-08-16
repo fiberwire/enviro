@@ -8,7 +8,7 @@ A reactive environment library.
 ## What is a reactive environment?
 A reactive environment is a state container that can be updated asynchronously, at which point its updated state will be sent to all subscribers.
 
-## What can I do with an asynchronous environment?
+## What can I do with a reactive environment?
 In the simplest case, using a `DirectEnvironment`, you could synchronize state between any number of sources of interaction in an asynchronous way with little effort.
 
 In a more advanced case, you could use an `AgentEnvironment` to implement an authoritative game environment where Agents send input and the environment applies that input to its state.
