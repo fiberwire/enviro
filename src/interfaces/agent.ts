@@ -8,7 +8,5 @@ import {
 export interface IAgent<AState, EState> {
   interact(state: IStateUpdate<EState>): Promise<IAgentUpdate<AState>>;
 
-  interactWithEnvironment(
-    state: Observable<IStateUpdate<EState>>,
-    env: Observer<IInteraction<AState, EState>>): Observable<IInteraction<AState, EState>>;
+  interactWithEnvironment(state: Observable<IStateUpdate<EState>>): Observable<IAgentUpdate<AState>>;
 }
