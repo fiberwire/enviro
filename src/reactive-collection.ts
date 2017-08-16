@@ -5,12 +5,12 @@ import {
   ReplaySubject,
   Subject,
   Subscription,
+  Scheduler,
 } from 'rxjs';
-import { IScheduler } from 'rxjs/Scheduler';
 import { ReactiveProperty } from './index';
 
 import * as _ from 'lodash';
-import * as Rx from 'rxjs';
+import { IScheduler } from 'rxjs/Scheduler';
 
 export class ReactiveCollection<T> {
   private pushed: ReplaySubject<T> = new ReplaySubject<T>(1);
@@ -57,8 +57,8 @@ export class ReactiveCollection<T> {
     observer: (value: T) => void | Observer<T>
   ): Subscription {
     return this.pushed
-      .observeOn(Rx.Scheduler.asap)
-      .subscribeOn(Rx.Scheduler.asap)
+      .observeOn(Scheduler.asap)
+      .subscribeOn(Scheduler.asap)
       .subscribe(observer);
   }
 
@@ -66,8 +66,8 @@ export class ReactiveCollection<T> {
     observer: (value: T) => void | Observer<T>
   ): Subscription {
     return this.popped
-      .observeOn(Rx.Scheduler.asap)
-      .subscribeOn(Rx.Scheduler.asap)
+      .observeOn(Scheduler.asap)
+      .subscribeOn(Scheduler.asap)
       .subscribe(observer);
   }
 
@@ -75,8 +75,8 @@ export class ReactiveCollection<T> {
     observer: (value: T) => void | Observer<T>
   ): Subscription {
     return this.shifted
-      .observeOn(Rx.Scheduler.asap)
-      .subscribeOn(Rx.Scheduler.asap)
+      .observeOn(Scheduler.asap)
+      .subscribeOn(Scheduler.asap)
       .subscribe(observer);
   }
 
@@ -84,8 +84,8 @@ export class ReactiveCollection<T> {
     observer: (value: T) => void | Observer<T>
   ): Subscription {
     return this.unshifted
-      .observeOn(Rx.Scheduler.asap)
-      .subscribeOn(Rx.Scheduler.asap)
+      .observeOn(Scheduler.asap)
+      .subscribeOn(Scheduler.asap)
       .subscribe(observer);
   }
 
@@ -93,8 +93,8 @@ export class ReactiveCollection<T> {
     observer: (value: T) => void | Observer<T>
   ): Subscription {
     return this.removed
-      .observeOn(Rx.Scheduler.asap)
-      .subscribeOn(Rx.Scheduler.asap)
+      .observeOn(Scheduler.asap)
+      .subscribeOn(Scheduler.asap)
       .subscribe(observer);
   }
 
@@ -102,8 +102,8 @@ export class ReactiveCollection<T> {
     observer: (value: T) => void | Observer<T>
   ): Subscription {
     return this.rotated
-      .observeOn(Rx.Scheduler.asap)
-      .subscribeOn(Rx.Scheduler.asap)
+      .observeOn(Scheduler.asap)
+      .subscribeOn(Scheduler.asap)
       .subscribe(observer);
   }
 
@@ -147,6 +147,7 @@ export class ReactiveCollection<T> {
   //////// but since it rotates when it rotates
   //////// it will just rotate again, since you rotated
   //////// although, you can rotate a different collection inside a subscriber
+  //////// TODO: try having two collections rotate each other in each others' subscriber to rotate.
 
   // takes the first value, pushes it to the back of the bus, and returns it.
   public rotate(): T {
@@ -158,9 +159,17 @@ export class ReactiveCollection<T> {
     return shifted;
   }
 
+  // rotates through each value and performs an action on it
   public rotateEach(action: (value: T) => void): void {
     _.range(this.value.length).forEach(i => {
       action(this.rotate());
+    });
+  }
+
+  // rotates through each value and applies a selector function to it, returning its results
+  public rotateMap<U>(action: (Value: T) => U): U[] {
+    return _.range(this.value.length).map(i => {
+      return action(this.rotate());
     });
   }
 
