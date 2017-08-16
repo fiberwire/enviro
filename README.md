@@ -11,7 +11,7 @@ A reactive environment is a state container that can be updated asynchronously, 
 ## What can I do with a reactive environment?
 In the simplest case, using a `DirectEnvironment`, you could synchronize state between any number of sources of interaction in an asynchronous way with little effort.
 
-In a more advanced case, you could use an `AgentEnvironment` to implement an authoritative game environment where Agents send input and the environment applies that input to its state.
+In a more advanced case, you could use an `AgentEnvironment` to implement an authoritative game environment where Agents send input and the environment applies that input to its state. Or you could use it as an AI simulation environment.
 
 I made this library to be used with [enome](http://www.github.com/fiberwire/enome), which is a reactive evolution framework.
 
