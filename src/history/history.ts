@@ -1,4 +1,5 @@
-import { IHistory, ReactiveCollection } from '../index';
+import { IHistory, IHistoryOptions, ReactiveCollection } from '../index';
+
 export class History<T> implements IHistory<T> {
   public history: ReactiveCollection<T> = new ReactiveCollection();
 
@@ -13,7 +14,7 @@ export class History<T> implements IHistory<T> {
     return this.history.value[0];
   }
 
-  constructor(public maxLength: number) {
+  constructor(public options: IHistoryOptions) {
     this.history.subscribeToRemove((r) => {
       this.handleOldRecords(r);
     });
@@ -26,7 +27,7 @@ export class History<T> implements IHistory<T> {
 
   // add records to the history
   public record(value: T): T {
-    while (this.length + 1 > this.maxLength){
+    while (this.length + 1 > this.options.maxLength){
       this.remove(this.oldest);
     }
 

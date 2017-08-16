@@ -1,9 +1,9 @@
-import { ReactiveCollection } from '../index';
+import { IHistoryOptions, ReactiveCollection } from '../index';
 
 export interface IHistory<T> {
   history: ReactiveCollection<T>;
   length: number;
-  maxLength: number;
+  options: IHistoryOptions
 
   newest: T;
   oldest: T;

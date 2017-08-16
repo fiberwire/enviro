@@ -3,11 +3,8 @@ import { History, IPersistenceOptions } from "../index";
 
 export abstract class PersistentHistory<T> extends History<T> {
 
-    constructor(
-        public maxLength: number,
-        public options: IPersistenceOptions
-    ) {
-        super(maxLength);
+    constructor(public options: IPersistenceOptions) {
+        super(options);
 
         if (options.historyFileName) {
             this.history
