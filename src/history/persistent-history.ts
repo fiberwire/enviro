@@ -9,7 +9,7 @@ export abstract class PersistentHistory<T> extends History<T> {
         if (options.historyFileName) {
             this.history
                 .debounceWithTimeout(options.autoSaveInterval || 10000)
-                .subscribe((h) => this.save(h, options.historyFileName));
+                .subscribe((h) => this.saveHistory(h, options.historyFileName));
         }
 
         if (options.oldrecordFileName) {
@@ -19,6 +19,6 @@ export abstract class PersistentHistory<T> extends History<T> {
         }
     }
 
-    public abstract save(history: T[], fileName: string): void;
+    public abstract saveHistory(history: T[], fileName: string): void;
     public abstract saveOldRecord(value: T, fileName: string): void;
 }
