@@ -1,8 +1,8 @@
 import {
   History,
   IEnvironment,
+  IEnvironmentOptions,
   IHistoricalEnvironment,
-  IHistoricalOptions,
   IHistoryOptions,
   IPersistenceOptions,
   IStateUpdate,
@@ -21,11 +21,10 @@ export abstract class HistoricalEnvironment<EState> extends DirectEnvironment<
     IEnvironment<EState> {
   public history: History<IStateUpdate<EState>>;
   public state: ReactiveProperty<IStateUpdate<EState>>;
-  public incomingStates: Subject<IStateUpdate<EState>>;
-  public initialState: IStateUpdate<EState>;
+  public input: Subject<IStateUpdate<EState>>;
 
   constructor(
-    public options: IHistoricalOptions,
+    public options: IEnvironmentOptions,
     public historyOptions: IHistoryOptions
   ) {
     super(options);
