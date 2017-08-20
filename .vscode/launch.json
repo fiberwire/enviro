@@ -8,11 +8,10 @@
       "type": "node",
       "request": "launch",
       "name": "Debug file",
-      "program": "${workspaceRoot}/lib/${fileBasenameNoExtension}.js",
+      "program": "${workspaceRoot}/lib/${fileBasenameNoExtension}",
       "cwd": "${workspaceRoot}",
       "sourceMaps": true,
       "smartStep": true,
-      "preLaunchTask": "build",
       "outFiles": [
         "${workspaceRoot}/lib/*.js"
       ]
@@ -28,6 +27,18 @@
         "jest-environment-node-debug"
       ],
       "cwd": "${workspaceRoot}"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug hello",
+      "program": "${workspaceRoot}/lib/examples/hello.js",
+      "cwd": "${workspaceRoot}",
+      "sourceMaps": true,
+      "smartStep": true,
+      "outFiles": [
+        "${workspaceRoot}/lib/*.js"
+      ]
     }
   ]
 }
