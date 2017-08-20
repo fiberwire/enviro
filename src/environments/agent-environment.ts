@@ -29,12 +29,7 @@ export abstract class AgentEnvironment<
   }
 
   // The beginning state of the Environment
-  public abstract get initialState(): IStateUpdate<EState>;
-
-  // resets the environment back to a fresh state
-  public reset(): void {
-    this.state.value = this.initialState;
-  }
+  public abstract get initialState(): EState;
 
   public abstract applyInteractions(
     interactionBuffer: Array<IAgentUpdate<AState>>
@@ -46,8 +41,9 @@ export abstract class AgentEnvironment<
       this.incomingInteractions
     )
       .map(buffer => this.applyInteractions(buffer))
-      .subscribe(i => this.incomingStates.next(i));
+      .subscribe(i => this.next(i));
   }
+  
 
   public bufferInteractions(
     interactionsPerSecond: number,

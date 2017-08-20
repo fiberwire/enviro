@@ -6,31 +6,55 @@ import {
   ReactiveProperty,
 } from '../index';
 
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable, Observer, Subscription } from 'rxjs/Rx';
 
 export abstract class DirectEnvironment<EState>
   implements IEnvironment<EState> {
   public iteration: number = 0;
 
-  public state: ReactiveProperty<IStateUpdate<EState>>;
+  public state: ReactiveProperty<IStateUpdate<EState>> = new ReactiveProperty();
 
-  public incomingStates: Subject<IStateUpdate<EState>>;
+  public get input(): Observer<IStateUpdate<EState>> {
+    return this.incomingStates;
+  }
 
-  public abstract get initialState(): IStateUpdate<EState>;
+  public get updates(): Observable<IStateUpdate<EState>> {
+    return this.incomingStates;
+  }
+
+  public abstract get initialState(): EState;
 
   public subs: Subscription;
 
+  private incomingStates: Subject<IStateUpdate<EState>> = new Subject();
+
   constructor(public options: IEnvironmentOptions) {
-    this.state.value = this.initialState;
-    this.incomingStates = new Subject();
+    this.reset();
+
     this.subs = new Subscription();
 
-    this.subs.add(this.update(this.incomingStates));
+    this.subs.add(this.update(this.updates));
+  }
+
+  public initializeState(state: EState): IStateUpdate<EState> {
+    return {
+      iteration: 0,
+      state,
+    };
+  }
+
+  public next(state: IStateUpdate<EState>): void {
+    this.input.next(state);
   }
 
   public update(stateUpdates: Observable<IStateUpdate<EState>>): Subscription {
     return stateUpdates.subscribe(s => {
       this.state.value = s;
     });
+  }
+
+  // resets the environment back to a fresh state
+  public reset(): void {
+    this.state.value = this.initializeState(this.initialState);
   }
 }

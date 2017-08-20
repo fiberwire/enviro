@@ -1,4 +1,4 @@
-import { Observable, Subject, Subscription } from 'rxjs/Rx';
+import { Observable, Observer, Subject, Subscription } from 'rxjs/Rx';
 import {
   IEnvironmentOptions,
   IStateUpdate,
@@ -7,10 +7,14 @@ import {
 
 export interface IEnvironment<EState> {
   state: ReactiveProperty<IStateUpdate<EState>>;
-  incomingStates: Subject<IStateUpdate<EState>>;
+  input: Observer<IStateUpdate<EState>>;
+  updates: Observable<IStateUpdate<EState>>;
   options: IEnvironmentOptions;
-  initialState: IStateUpdate<EState>;
+  initialState: EState;
   iteration: number;
 
+  initializeState(state: EState): IStateUpdate<EState>;
+  next(state: IStateUpdate<EState>): void;
   update(stateUpdates: Observable<IStateUpdate<EState>>): Subscription;
+  reset(): void;
 }
