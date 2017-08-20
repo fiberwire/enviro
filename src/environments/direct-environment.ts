@@ -10,7 +10,8 @@ import { Observable, Observer, Subscription } from 'rxjs/Rx';
 
 export abstract class DirectEnvironment<EState>
   implements IEnvironment<EState> {
-  public iteration: number = 0;
+
+  public iteration: ReactiveProperty<number>;
 
   public state: ReactiveProperty<IStateUpdate<EState>> = new ReactiveProperty();
 
@@ -22,7 +23,14 @@ export abstract class DirectEnvironment<EState>
     return this.incomingStates;
   }
 
-  public abstract get initialState(): EState;
+  public abstract get defaultState(): EState;
+
+  public get initialState(): IStateUpdate<EState> {
+    return {
+      iteration: 0,
+      state: this.defaultState,
+    };
+  }
 
   public subs: Subscription;
 
@@ -30,17 +38,11 @@ export abstract class DirectEnvironment<EState>
 
   constructor(public options: IEnvironmentOptions) {
     this.reset();
+    this.iteration = new ReactiveProperty(this.state.value.iteration);
 
     this.subs = new Subscription();
 
     this.subs.add(this.update(this.updates));
-  }
-
-  public initializeState(state: EState): IStateUpdate<EState> {
-    return {
-      iteration: 0,
-      state,
-    };
   }
 
   public next(state: IStateUpdate<EState>): void {
@@ -55,6 +57,6 @@ export abstract class DirectEnvironment<EState>
 
   // resets the environment back to a fresh state
   public reset(): void {
-    this.state.value = this.initializeState(this.initialState);
+    this.state.value = this.initialState;
   }
 }

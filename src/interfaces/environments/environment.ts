@@ -10,10 +10,10 @@ export interface IEnvironment<EState> {
   input: Observer<IStateUpdate<EState>>;
   updates: Observable<IStateUpdate<EState>>;
   options: IEnvironmentOptions;
-  initialState: EState;
-  iteration: number;
-
-  initializeState(state: EState): IStateUpdate<EState>;
+  defaultState: EState;
+  initialState: IStateUpdate<EState>;
+  iteration: ReactiveProperty<number>;
+  
   next(state: IStateUpdate<EState>): void;
   update(stateUpdates: Observable<IStateUpdate<EState>>): Subscription;
   reset(): void;

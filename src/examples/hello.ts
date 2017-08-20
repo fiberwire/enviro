@@ -8,7 +8,7 @@ interface IHelloState {
 
 // extend environment class, passing in state interface as a type parameter
 class HelloEnv extends DirectEnvironment<IHelloState> {
-  public get initialState(): IHelloState {
+  public get defaultState(): IHelloState {
     return {
       message: '',
       name: '',

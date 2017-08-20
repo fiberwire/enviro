@@ -16,7 +16,7 @@ import {
 export abstract class AgentEnvironment<
   AState,
   EState
-> extends DirectEnvironment<EState>
+  > extends DirectEnvironment<EState>
   implements IAgentEnvironment<AState, EState> {
   public incomingInteractions: Subject<IAgentUpdate<AState>>;
 
@@ -27,9 +27,6 @@ export abstract class AgentEnvironment<
 
     this.subs.add(this.interact());
   }
-
-  // The beginning state of the Environment
-  public abstract get initialState(): EState;
 
   public abstract applyInteractions(
     interactionBuffer: Array<IAgentUpdate<AState>>
@@ -43,7 +40,6 @@ export abstract class AgentEnvironment<
       .map(buffer => this.applyInteractions(buffer))
       .subscribe(i => this.next(i));
   }
-  
 
   public bufferInteractions(
     interactionsPerSecond: number,
