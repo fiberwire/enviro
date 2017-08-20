@@ -5,13 +5,13 @@ import { History } from './history/history';
 import { IAgent } from './interfaces/agent';
 import { IAgentUpdate } from './interfaces/agent-update';
 import { IAgentEnvironment } from './interfaces/environments/agent-environment';
+import { IBufferedEnvironment } from "./interfaces/environments/buffered-environment";
 import { IEnvironment } from './interfaces/environments/environment';
 import { IHistoricalEnvironment } from './interfaces/environments/historical-environment';
 import { IHistory } from './interfaces/history';
 import { IInteraction } from './interfaces/interaction';
 import { IStateUpdate } from './interfaces/state-update';
 import { IEnvironmentOptions } from './options/environment-options';
-import { IHistoricalOptions } from './options/historical-options';
 import { IHistoryOptions } from './options/history-options';
 import { IPersistenceOptions } from './options/persistence-options';
 import { ReactiveCollection } from './reactive-collection';
@@ -36,7 +36,7 @@ export {
 };
 
 // environment interfaces
-export { IEnvironment, IAgentEnvironment };
+export { IEnvironment, IAgentEnvironment, IBufferedEnvironment };
 
 // agent interfaces
 export { IAgent };
@@ -44,7 +44,6 @@ export { IAgent };
 // options
 export {
   IEnvironmentOptions,
-  IHistoricalOptions,
   IPersistenceOptions,
   IHistoryOptions,
 };
