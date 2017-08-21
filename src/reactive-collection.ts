@@ -3,9 +3,9 @@ import {
   Observable,
   Observer,
   ReplaySubject,
+  Scheduler,
   Subject,
   Subscription,
-  Scheduler,
 } from 'rxjs';
 import { ReactiveProperty } from './index';
 

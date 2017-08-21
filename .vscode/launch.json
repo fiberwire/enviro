@@ -32,7 +32,7 @@
       "type": "node",
       "request": "launch",
       "name": "Debug hello",
-      "program": "${workspaceRoot}/lib/examples/hello.js",
+      "program": "${workspaceRoot}/lib/examples/hello/hello.js",
       "cwd": "${workspaceRoot}",
       "sourceMaps": true,
       "smartStep": true,

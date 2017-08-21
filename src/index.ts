@@ -5,7 +5,7 @@ import { History } from './history/history';
 import { IAgent } from './interfaces/agent';
 import { IAgentUpdate } from './interfaces/agent-update';
 import { IAgentEnvironment } from './interfaces/environments/agent-environment';
-import { IBufferedEnvironment } from "./interfaces/environments/buffered-environment";
+import { IBufferedEnvironment } from './interfaces/environments/buffered-environment';
 import { IEnvironment } from './interfaces/environments/environment';
 import { IHistoricalEnvironment } from './interfaces/environments/historical-environment';
 import { IHistory } from './interfaces/history';
@@ -42,8 +42,4 @@ export { IEnvironment, IAgentEnvironment, IBufferedEnvironment };
 export { IAgent };
 
 // options
-export {
-  IEnvironmentOptions,
-  IPersistenceOptions,
-  IHistoryOptions,
-};
+export { IEnvironmentOptions, IPersistenceOptions, IHistoryOptions };

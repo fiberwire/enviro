@@ -10,7 +10,6 @@ import { Observable, Observer, Subscription } from 'rxjs/Rx';
 
 export abstract class DirectEnvironment<EState>
   implements IEnvironment<EState> {
-
   public iteration: ReactiveProperty<number>;
 
   public state: ReactiveProperty<IStateUpdate<EState>> = new ReactiveProperty();

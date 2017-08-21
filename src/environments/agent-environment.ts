@@ -16,7 +16,7 @@ import {
 export abstract class AgentEnvironment<
   AState,
   EState
-  > extends DirectEnvironment<EState>
+> extends DirectEnvironment<EState>
   implements IAgentEnvironment<AState, EState> {
   public incomingInteractions: Subject<IAgentUpdate<AState>>;
 

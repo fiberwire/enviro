@@ -1,4 +1,4 @@
-import { DirectEnvironment, IStateUpdate } from '../index';
+import { DirectEnvironment, IStateUpdate } from '../../index';
 
 // define shape of state
 interface IHelloState {
