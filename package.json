@@ -35,10 +35,12 @@
     "watch:test": "jest --watch"
   },
   "dependencies": {
+    "chance": "^1.0.10",
     "lodash": "^4.17.4",
     "rxjs": "^5.4.3"
   },
   "devDependencies": {
+    "@types/chance": "^0.7.34",
     "@types/jest": "^20.0.5",
     "@types/lodash": "^4.14.73",
     "@types/node": "^8.0.0",

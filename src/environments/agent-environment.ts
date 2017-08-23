@@ -20,23 +20,29 @@ export abstract class AgentEnvironment<
   implements IAgentEnvironment<AState, EState> {
   public incomingInteractions: Subject<IAgentUpdate<AState>>;
 
+  public get bufferedInteractions(): Observable<Array<IAgentUpdate<AState>>> {
+    return this.bufferInteractions(
+      this.options.interactionRate,
+      this.incomingInteractions
+    );
+  }
+
   constructor(public options: IEnvironmentOptions) {
     super(options);
 
     this.incomingInteractions = new Subject<IAgentUpdate<AState>>();
 
-    this.subs.add(this.interact());
+    this.subs.add(this.interact(this.bufferedInteractions));
   }
 
   public abstract applyInteractions(
     interactionBuffer: Array<IAgentUpdate<AState>>
   ): IStateUpdate<EState>;
 
-  public interact(): Subscription {
-    return this.bufferInteractions(
-      this.options.interactionRate,
-      this.incomingInteractions
-    )
+  public interact(
+    interactions: Observable<Array<IAgentUpdate<AState>>>
+  ): Subscription {
+    return interactions
       .map(buffer => this.applyInteractions(buffer))
       .subscribe(i => this.next(i));
   }
@@ -46,7 +52,7 @@ export abstract class AgentEnvironment<
     interactions: Observable<IAgentUpdate<AState>>
   ): Observable<Array<IAgentUpdate<AState>>> {
     return this.incomingInteractions
-      .filter(i => i.iteration > this.state.value.iteration) // only accept new interactions
+      .filter(i => i.iteration === this.iteration.value + 1) // only accept new interactions
       .bufferTime(1000 / interactionsPerSecond) // buffer new interactions periodically
       .filter(i => i.length > 0); // do notihng if there are no interactions
   }

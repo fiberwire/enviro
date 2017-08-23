@@ -1,3 +1,4 @@
+import { Agent } from './agents/agent';
 import { AgentEnvironment } from './environments/agent-environment';
 import { DirectEnvironment } from './environments/direct-environment';
 import { HistoricalEnvironment } from './environments/historical-environment';
@@ -22,6 +23,9 @@ export { ReactiveProperty, ReactiveCollection };
 
 // environments
 export { AgentEnvironment, DirectEnvironment, HistoricalEnvironment };
+
+// agents
+export { Agent };
 
 // history stuff
 export { History };

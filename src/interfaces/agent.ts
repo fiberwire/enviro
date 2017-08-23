@@ -2,9 +2,10 @@ import { Observable, Observer, Subscription } from 'rxjs/Rx';
 import { IAgentUpdate, IInteraction, IStateUpdate } from '../index';
 
 export interface IAgent<AState, EState> {
-  interact(state: IStateUpdate<EState>): Promise<IAgentUpdate<AState>>;
+  id: string;
+  interact(state: IStateUpdate<EState>): IAgentUpdate<AState>;
 
-  interactWithEnvironment(
+  interactWithState(
     state: Observable<IStateUpdate<EState>>
   ): Observable<IAgentUpdate<AState>>;
 }
