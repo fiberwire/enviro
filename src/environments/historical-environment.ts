@@ -21,7 +21,7 @@ export abstract class HistoricalEnvironment<EState> extends DirectEnvironment<
     IEnvironment<EState> {
   public history: History<IStateUpdate<EState>>;
   public state: ReactiveProperty<IStateUpdate<EState>>;
-  public input: Subject<IStateUpdate<EState>>;
+  public inputStates: Subject<IStateUpdate<EState>>;
 
   constructor(
     public options: IEnvironmentOptions,

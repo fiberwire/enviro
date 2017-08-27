@@ -5,6 +5,8 @@ export interface IAgentEnvironment<AState, EState>
   extends IEnvironment<EState> {
   inputInteractions: Subject<IAgentUpdate<AState>>;
 
+  nextInteraction(interaction: IAgentUpdate<AState>): void;
+
   applyInteractions(
     interactionBuffer: Array<IAgentUpdate<AState>>
   ): IStateUpdate<EState>;

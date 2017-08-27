@@ -1,3 +1,4 @@
+import { IAgentEnvironmentOptions } from './options/agent-env-options';
 import { Agent } from './agents/agent';
 import { AgentEnvironment } from './environments/agent-environment';
 import { DirectEnvironment } from './environments/direct-environment';
@@ -46,4 +47,4 @@ export { IEnvironment, IAgentEnvironment, IBufferedEnvironment };
 export { IAgent };
 
 // options
-export { IEnvironmentOptions, IPersistenceOptions, IHistoryOptions };
+export { IEnvironmentOptions, IPersistenceOptions, IHistoryOptions, IAgentEnvironmentOptions };

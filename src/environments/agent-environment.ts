@@ -11,6 +11,7 @@ import {
   IStateUpdate,
   ReactiveCollection,
   ReactiveProperty,
+  IAgentEnvironmentOptions,
 } from '../index';
 
 export abstract class AgentEnvironment<
@@ -22,12 +23,12 @@ export abstract class AgentEnvironment<
 
   public get bufferedInteractions(): Observable<Array<IAgentUpdate<AState>>> {
     return this.bufferInteractions(
-      this.options.interactionRate,
+      this.options.interactionTime,
       this.inputInteractions
     );
   }
 
-  constructor(public options: IEnvironmentOptions) {
+  constructor(public options: IAgentEnvironmentOptions) {
     super(options);
 
     this.inputInteractions = new Subject<IAgentUpdate<AState>>();
@@ -39,12 +40,16 @@ export abstract class AgentEnvironment<
     interactionBuffer: Array<IAgentUpdate<AState>>
   ): IStateUpdate<EState>;
 
+  public nextInteraction(interaction: IAgentUpdate<AState>): void {
+    this.inputInteractions.next(interaction);
+  }
+
   public interact(
-    interactions: Observable<Array<IAgentUpdate<AState>>>
+    bufferedInteractions: Observable<Array<IAgentUpdate<AState>>>
   ): Subscription {
-    return interactions
+    return bufferedInteractions
       .map(buffer => this.applyInteractions(buffer))
-      .subscribe(i => this.next(i));
+      .subscribe(i => this.nextState(i));
   }
 
   public bufferInteractions(

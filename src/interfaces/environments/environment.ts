@@ -7,14 +7,14 @@ import {
 
 export interface IEnvironment<EState> {
   state: ReactiveProperty<IStateUpdate<EState>>;
-  input: Observer<IStateUpdate<EState>>;
+  inputStates: Observer<IStateUpdate<EState>>;
   updates: Observable<IStateUpdate<EState>>;
   options: IEnvironmentOptions;
   defaultState: EState;
   initialState: IStateUpdate<EState>;
   iteration: ReactiveProperty<number>;
 
-  next(state: IStateUpdate<EState>): void;
+  nextState(state: IStateUpdate<EState>): void;
   update(stateUpdates: Observable<IStateUpdate<EState>>): Subscription;
   reset(): void;
 }

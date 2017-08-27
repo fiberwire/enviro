@@ -1,7 +1,11 @@
 import { RandomAgent } from './random-agent';
 import { RandomEnv } from './random-env';
 
-const env = new RandomEnv({ interactionRate: 1 / 2 });
+const env = new RandomEnv({
+  updateRate: 1,
+  interactionTime: 1000
+});
+
 console.log(`created environment`);
 
 env.updates.subscribe(update => {
@@ -10,6 +14,7 @@ env.updates.subscribe(update => {
       .mean}`
   );
 });
+
 console.log(`subscribed to updates`);
 
 const agent1 = new RandomAgent();
