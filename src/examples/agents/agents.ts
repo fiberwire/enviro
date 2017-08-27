@@ -1,8 +1,7 @@
 import { RandomAgent } from './random-agent';
 import { RandomEnv } from './random-env';
 
-
-const env = new RandomEnv({ interactionRate: 1/2 });
+const env = new RandomEnv({ interactionRate: 1 / 2 });
 console.log(`created environment`);
 
 env.updates.subscribe(update => {
@@ -21,12 +20,12 @@ agent1.interactWithEnvironment(env);
 agent2.interactWithEnvironment(env);
 console.log(`made agents interact with environment`);
 
-env.incomingInteractions.next({
-  agentID: "merp",
+env.inputInteractions.next({
+  agentID: 'merp',
   iteration: 1,
   state: {
-    x: 100
-  }
+    x: 100,
+  },
 });
 
 console.log(`sent test state`);

@@ -18,19 +18,19 @@ export abstract class AgentEnvironment<
   EState
 > extends DirectEnvironment<EState>
   implements IAgentEnvironment<AState, EState> {
-  public incomingInteractions: Subject<IAgentUpdate<AState>>;
+  public inputInteractions: Subject<IAgentUpdate<AState>>;
 
   public get bufferedInteractions(): Observable<Array<IAgentUpdate<AState>>> {
     return this.bufferInteractions(
       this.options.interactionRate,
-      this.incomingInteractions
+      this.inputInteractions
     );
   }
 
   constructor(public options: IEnvironmentOptions) {
     super(options);
 
-    this.incomingInteractions = new Subject<IAgentUpdate<AState>>();
+    this.inputInteractions = new Subject<IAgentUpdate<AState>>();
 
     this.subs.add(this.interact(this.bufferedInteractions));
   }
@@ -51,9 +51,9 @@ export abstract class AgentEnvironment<
     interactionsPerSecond: number,
     interactions: Observable<IAgentUpdate<AState>>
   ): Observable<Array<IAgentUpdate<AState>>> {
-    return this.incomingInteractions
+    return this.inputInteractions
       .filter(i => i.iteration === this.iteration.value + 1) // only accept new interactions
       .bufferTime(1000 / interactionsPerSecond) // buffer new interactions periodically
-      .filter(i => i.length > 0); // do notihng if there are no interactions
+      .filter(i => i.length > 0); // do nothing if there are no interactions
   }
 }

@@ -16,7 +16,7 @@ export abstract class Agent<AState, EState> implements IAgent<AState, EState> {
     return chance.guid();
   }
 
-  constructor(id?: string){
+  constructor(id?: string) {
     this.id = id || this.newID;
   }
   public abstract interact(state: IStateUpdate<EState>): IAgentUpdate<AState>;
@@ -31,7 +31,7 @@ export abstract class Agent<AState, EState> implements IAgent<AState, EState> {
     env: IAgentEnvironment<AState, EState>
   ): Subscription {
     return this.interactWithState(env.updates).subscribe(i => {
-      env.incomingInteractions.next(i);
+      env.inputInteractions.next(i);
     });
   }
 }

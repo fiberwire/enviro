@@ -3,7 +3,7 @@ import { IAgentUpdate, IEnvironment, IStateUpdate } from '../../index';
 
 export interface IAgentEnvironment<AState, EState>
   extends IEnvironment<EState> {
-  incomingInteractions: Subject<IAgentUpdate<AState>>;
+  inputInteractions: Subject<IAgentUpdate<AState>>;
 
   applyInteractions(
     interactionBuffer: Array<IAgentUpdate<AState>>

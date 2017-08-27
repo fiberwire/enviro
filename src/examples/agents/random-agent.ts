@@ -7,7 +7,6 @@ import * as Chance from 'chance';
 const chance = new Chance();
 
 export class RandomAgent extends Agent<IRandomAState, IRandomEState> {
-
   public interact(
     state: IStateUpdate<IRandomEState>
   ): IAgentUpdate<IRandomAState> {
