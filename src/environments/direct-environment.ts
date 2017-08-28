@@ -1,4 +1,3 @@
-import { Subject } from 'rxjs/Subject';
 import {
   IEnvironment,
   IEnvironmentOptions,
@@ -6,7 +5,7 @@ import {
   ReactiveProperty,
 } from '../index';
 
-import { Observable, Observer, Subscription } from 'rxjs/Rx';
+import { Observable, Observer, Subject, Subscription } from 'rxjs/Rx';
 
 /**
  * An Environment whose state you update directly.
@@ -19,6 +18,15 @@ import { Observable, Observer, Subscription } from 'rxjs/Rx';
  */
 export abstract class DirectEnvironment<EState>
   implements IEnvironment<EState> {
+
+
+  /**
+   * Counter which keeps track of the current iteration
+   * 
+   * 
+   * @type {ReactiveProperty<number>}
+   * @memberof DirectEnvironment
+   */
   public iteration: ReactiveProperty<number>;
 
 
@@ -66,7 +74,6 @@ export abstract class DirectEnvironment<EState>
   public abstract get defaultState(): EState;
 
 
-
   /**
    * The beginning state update for the Environment. Uses defaultState as the state and 0 as the iteration.
    * 
@@ -81,6 +88,7 @@ export abstract class DirectEnvironment<EState>
     };
   }
 
+  // add all subs to this, so they can be in one place and easily unsubbed
   public subs: Subscription = new Subscription();
 
 
