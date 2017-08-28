@@ -31,7 +31,7 @@ export abstract class Agent<AState, EState> implements IAgent<AState, EState> {
     env: IAgentEnvironment<AState, EState>
   ): Subscription {
     return this.interactWithState(env.updates).subscribe(i => {
-      env.inputInteractions.next(i);
+      env.incomingInteractions.next(i);
     });
   }
 }

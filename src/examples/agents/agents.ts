@@ -25,7 +25,7 @@ agent1.interactWithEnvironment(env);
 agent2.interactWithEnvironment(env);
 console.log(`made agents interact with environment`);
 
-env.inputInteractions.next({
+env.incomingInteractions.next({
   agentID: 'merp',
   iteration: 1,
   state: {
