@@ -17,7 +17,7 @@ class HelloEnv extends DirectEnvironment<IHelloState> {
 }
 
 // create new env
-const env = new HelloEnv({ updateRate: 1 });
+const env = new HelloEnv({});
 
 // subscribe to env updates
 env.updates.take(1).subscribe(s => {
