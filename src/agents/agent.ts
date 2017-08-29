@@ -41,7 +41,6 @@ export abstract class Agent<AState, EState> implements IAgent<AState, EState> {
     return state.map(s => this.interact(s));
   }
 
-
   /**
    * Interacts with the provided environment's state
    * by calling interactWithState() on its state property,
@@ -55,9 +54,8 @@ export abstract class Agent<AState, EState> implements IAgent<AState, EState> {
   public interactWithEnvironment(
     env: IAgentEnvironment<AState, EState>
   ): Subscription {
-    return this.interactWithState(env.state.asObservable())
-      .subscribe(i => {
-        env.nextInteraction(i);
-      });
+    return this.interactWithState(env.state.asObservable()).subscribe(i => {
+      env.nextInteraction(i);
+    });
   }
 }

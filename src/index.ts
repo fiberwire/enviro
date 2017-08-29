@@ -1,4 +1,3 @@
-import { IAgentEnvironmentOptions } from './options/agent-env-options';
 import { Agent } from './agents/agent';
 import { AgentEnvironment } from './environments/agent-environment';
 import { DirectEnvironment } from './environments/direct-environment';
@@ -13,6 +12,7 @@ import { IHistoricalEnvironment } from './interfaces/environments/historical-env
 import { IHistory } from './interfaces/history';
 import { IInteraction } from './interfaces/interaction';
 import { IStateUpdate } from './interfaces/state-update';
+import { IAgentEnvironmentOptions } from './options/agent-env-options';
 import { IEnvironmentOptions } from './options/environment-options';
 import { IHistoryOptions } from './options/history-options';
 import { IPersistenceOptions } from './options/persistence-options';

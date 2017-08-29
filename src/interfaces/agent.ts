@@ -1,9 +1,13 @@
 import { Observable, Observer, Subscription } from 'rxjs/Rx';
-import { IAgentEnvironment, IAgentUpdate, IInteraction, IStateUpdate } from '../index';
+import {
+  IAgentEnvironment,
+  IAgentUpdate,
+  IInteraction,
+  IStateUpdate,
+} from '../index';
 
 export interface IAgent<AState, EState> {
   id: string;
-
 
   /**
    * takes the state of the environment and returns an interaction
@@ -13,7 +17,6 @@ export interface IAgent<AState, EState> {
    * @memberof IAgent
    */
   interact(state: IStateUpdate<EState>): IAgentUpdate<AState>;
-
 
   /**
    * Takes an observable of states and interacts with them as they come in
@@ -26,7 +29,6 @@ export interface IAgent<AState, EState> {
     state: Observable<IStateUpdate<EState>>
   ): Observable<IAgentUpdate<AState>>;
 
-
   /**
    * Takes an environment, interacts with its state,
    * and returns the subscription for the interaction
@@ -35,7 +37,5 @@ export interface IAgent<AState, EState> {
    * @returns {Subscription} - the interaction subscription
    * @memberof IAgent
    */
-  interactWithEnvironment(
-    env:IAgentEnvironment<AState, EState>
-  ): Subscription
+  interactWithEnvironment(env: IAgentEnvironment<AState, EState>): Subscription;
 }
