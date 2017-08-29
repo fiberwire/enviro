@@ -16,7 +16,7 @@ import {
 
 /**
  * An Environment whose state is updated indirectly by sending interactions to it
- * 
+ *
  * @export
  * @abstract
  * @class AgentEnvironment
@@ -32,7 +32,7 @@ export abstract class AgentEnvironment<
   implements IAgentEnvironment<AState, EState> {
   /**
    * This is where to send new interactions
-   * 
+   *
    * @readonly
    * @type {Observer<IAgentUpdate<AState>>}
    * @memberof AgentEnvironment
@@ -43,7 +43,7 @@ export abstract class AgentEnvironment<
 
   /**
    * An observable of new interactions that have yet to be applied to the Environment's state
-   * 
+   *
    * @readonly
    * @type {Observable<IAgentUpdate<AState>>}
    * @memberof AgentEnvironment
@@ -54,7 +54,7 @@ export abstract class AgentEnvironment<
 
   /**
    * Buffers this.interactions based on this.options.interactionTime
-   * 
+   *
    * @readonly
    * @type {Observable<Array<IAgentUpdate<AState>>>}
    * @memberof AgentEnvironment
@@ -68,7 +68,7 @@ export abstract class AgentEnvironment<
 
   /**
    * This is where you send new interactions
-   * 
+   *
    * @private
    * @type {Subject<IAgentUpdate<AState>>}
    * @memberof AgentEnvironment
@@ -88,10 +88,10 @@ export abstract class AgentEnvironment<
 
   /**
    * Takes an interaction buffer and returns a new state update
-   * 
+   *
    * @abstract
    * @param {Array<IAgentUpdate<AState>>} interactionBuffer - the interaction buffer to apply to state
-   * @returns {IStateUpdate<EState>} 
+   * @returns {IStateUpdate<EState>}
    * @memberof AgentEnvironment
    */
   public abstract applyInteractions(
@@ -100,7 +100,7 @@ export abstract class AgentEnvironment<
 
   /**
    * Sends an interaction to the Environment
-   * 
+   *
    * @param {IAgentUpdate<AState>} interaction - the interaction you are sending to the environment
    * @memberof AgentEnvironment
    */
@@ -110,9 +110,9 @@ export abstract class AgentEnvironment<
 
   /**
    * Takes a stream of interaction buffers, applies them as they come in, and sends the resulting state updates to the Environment
-   * 
+   *
    * @param {Observable<Array<IAgentUpdate<AState>>>} bufferedInteractions - a stream of interaction buffers to apply
-   * @returns {Subscription} 
+   * @returns {Subscription}
    * @memberof AgentEnvironment
    */
   public interact(
@@ -125,10 +125,10 @@ export abstract class AgentEnvironment<
 
   /**
    * Buffers interactions based on interactionTime
-   * 
-   * @param {number} interactionTime - time per interaction buffer 
+   *
+   * @param {number} interactionTime - time per interaction buffer
    * @param {Observable<IAgentUpdate<AState>>} interactions - interactions to buffer over time
-   * @returns {Observable<Array<IAgentUpdate<AState>>>} 
+   * @returns {Observable<Array<IAgentUpdate<AState>>>}
    * @memberof AgentEnvironment
    */
   public bufferInteractions(
@@ -137,7 +137,7 @@ export abstract class AgentEnvironment<
   ): Observable<Array<IAgentUpdate<AState>>> {
     return this.incomingInteractions
       .filter(i => i.iteration === this.iteration.value + 1) // only accept new interactions
-      .bufferTime(1000 / interactionTime) // buffer new interactions periodically
+      .bufferTime(interactionTime) // buffer new interactions periodically
       .filter(i => i.length > 0); // do nothing if there are no interactions
   }
 }
