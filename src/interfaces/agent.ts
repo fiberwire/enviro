@@ -1,5 +1,5 @@
 import { Observable, Observer, Subscription } from 'rxjs/Rx';
-import { IAgentUpdate, IInteraction, IStateUpdate } from '../index';
+import { IAgentEnvironment, IAgentUpdate, IInteraction, IStateUpdate } from '../index';
 
 export interface IAgent<AState, EState> {
   id: string;
@@ -8,4 +8,8 @@ export interface IAgent<AState, EState> {
   interactWithState(
     state: Observable<IStateUpdate<EState>>
   ): Observable<IAgentUpdate<AState>>;
+
+  interactWithEnvironment(
+    env:IAgentEnvironment<AState, EState>
+  ): Subscription
 }
