@@ -47,4 +47,9 @@ export { IEnvironment, IAgentEnvironment, IBufferedEnvironment };
 export { IAgent };
 
 // options
-export { IEnvironmentOptions, IPersistenceOptions, IHistoryOptions, IAgentEnvironmentOptions };
+export {
+  IEnvironmentOptions,
+  IPersistenceOptions,
+  IHistoryOptions,
+  IAgentEnvironmentOptions,
+};

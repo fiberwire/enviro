@@ -18,8 +18,6 @@ import { Observable, Observer, Subject, Subscription } from 'rxjs/Rx';
  */
 export abstract class DirectEnvironment<EState>
   implements IEnvironment<EState> {
-
-
   /**
    * Counter which keeps track of the current iteration
    * 
@@ -29,7 +27,6 @@ export abstract class DirectEnvironment<EState>
    */
   public iteration: ReactiveProperty<number>;
 
-
   /**
    * The state of the environment. Can be subscribed to, which allows you to react to updates
    * 
@@ -37,7 +34,6 @@ export abstract class DirectEnvironment<EState>
    * @memberof DirectEnvironment
    */
   public state: ReactiveProperty<IStateUpdate<EState>> = new ReactiveProperty();
-
 
   /**
    * This is where to send new state updates
@@ -50,7 +46,6 @@ export abstract class DirectEnvironment<EState>
     return this.incomingStates;
   }
 
-
   /**
    * Observable of new state updates that have yet to be applied to the Environment's state.
    * 
@@ -62,7 +57,6 @@ export abstract class DirectEnvironment<EState>
     return this.incomingStates;
   }
 
-
   /**
    * The beginning state of the Environment.
    * 
@@ -72,7 +66,6 @@ export abstract class DirectEnvironment<EState>
    * @memberof DirectEnvironment
    */
   public abstract get defaultState(): EState;
-
 
   /**
    * The beginning state update for the Environment. Uses defaultState as the state and 0 as the iteration.
@@ -91,7 +84,6 @@ export abstract class DirectEnvironment<EState>
   // add all subs to this, so they can be in one place and easily unsubbed
   public subs: Subscription = new Subscription();
 
-
   /**
    * the backing subject for inputState and updates
    * 
@@ -100,7 +92,6 @@ export abstract class DirectEnvironment<EState>
    * @memberof DirectEnvironment
    */
   private incomingStates: Subject<IStateUpdate<EState>> = new Subject();
-
 
   /**
    * Creates an instance of DirectEnvironment.
@@ -114,7 +105,6 @@ export abstract class DirectEnvironment<EState>
     this.subs.add(this.update(this.updates));
   }
 
-
   /**
    * Adds the provided state to inputStates for 
    * 
@@ -124,7 +114,6 @@ export abstract class DirectEnvironment<EState>
   public nextState(state: IStateUpdate<EState>): void {
     this.inputStates.next(state);
   }
-
 
   /**
    * Subscribes to stateUpdates, setting the state of the Environment each time it receives a new update
@@ -139,7 +128,6 @@ export abstract class DirectEnvironment<EState>
     });
   }
 
-  
   /**
    * resets the environment back to a fresh state
    * 

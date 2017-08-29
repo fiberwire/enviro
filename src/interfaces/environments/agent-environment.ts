@@ -3,9 +3,8 @@ import { IAgentUpdate, IEnvironment, IStateUpdate } from '../../index';
 
 export interface IAgentEnvironment<AState, EState>
   extends IEnvironment<EState> {
-
   inputInteractions: Observer<IAgentUpdate<AState>>;
-  
+
   interactions: Observable<IAgentUpdate<AState>>;
 
   nextInteraction(interaction: IAgentUpdate<AState>): void;

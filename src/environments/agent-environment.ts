@@ -14,7 +14,6 @@ import {
   ReactiveProperty,
 } from '../index';
 
-
 /**
  * An Environment whose state is updated indirectly by sending interactions to it
  * 
@@ -29,9 +28,8 @@ import {
 export abstract class AgentEnvironment<
   AState,
   EState
-  > extends DirectEnvironment<EState>
+> extends DirectEnvironment<EState>
   implements IAgentEnvironment<AState, EState> {
-
   /**
    * This is where to send new interactions
    * 
@@ -43,7 +41,6 @@ export abstract class AgentEnvironment<
     return this.incomingInteractions;
   }
 
-
   /**
    * An observable of new interactions that have yet to be applied to the Environment's state
    * 
@@ -54,7 +51,6 @@ export abstract class AgentEnvironment<
   public get interactions(): Observable<IAgentUpdate<AState>> {
     return this.incomingInteractions;
   }
-
 
   /**
    * Buffers this.interactions based on this.options.interactionTime
@@ -79,7 +75,6 @@ export abstract class AgentEnvironment<
    */
   private incomingInteractions: Subject<IAgentUpdate<AState>> = new Subject();
 
-
   /**
    * Creates an instance of AgentEnvironment.
    * @param {IAgentEnvironmentOptions} options - contains options to set up the Environment
@@ -90,7 +85,6 @@ export abstract class AgentEnvironment<
 
     this.subs.add(this.interact(this.bufferedInteractions));
   }
-
 
   /**
    * Takes an interaction buffer and returns a new state update
@@ -104,7 +98,6 @@ export abstract class AgentEnvironment<
     interactionBuffer: Array<IAgentUpdate<AState>>
   ): IStateUpdate<EState>;
 
-
   /**
    * Sends an interaction to the Environment
    * 
@@ -114,7 +107,6 @@ export abstract class AgentEnvironment<
   public nextInteraction(interaction: IAgentUpdate<AState>): void {
     this.inputInteractions.next(interaction);
   }
-
 
   /**
    * Takes a stream of interaction buffers, applies them as they come in, and sends the resulting state updates to the Environment
@@ -130,7 +122,6 @@ export abstract class AgentEnvironment<
       .map(buffer => this.applyInteractions(buffer))
       .subscribe(i => this.nextState(i));
   }
-
 
   /**
    * Buffers interactions based on interactionTime

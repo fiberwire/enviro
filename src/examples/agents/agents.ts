@@ -3,7 +3,7 @@ import { RandomEnv } from './random-env';
 
 const env = new RandomEnv({
   updateRate: 1,
-  interactionTime: 1000
+  interactionTime: 1000,
 });
 
 console.log(`created environment`);
