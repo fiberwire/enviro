@@ -1,5 +1,4 @@
 import {
-  IEnvironment,
   IEnvironmentOptions,
   IStateUpdate,
   ReactiveProperty,
@@ -22,8 +21,7 @@ import {
  * @implements {IEnvironment<EState>}
  * @template EState
  */
-export abstract class DirectEnvironment<EState>
-  implements IEnvironment<EState> {
+export abstract class DirectEnvironment<EState> {
   /**
    * Counter which keeps track of the current iteration
    *

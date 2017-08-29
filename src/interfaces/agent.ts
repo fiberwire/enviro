@@ -1,6 +1,6 @@
 import { Observable, Observer, Subscription } from 'rxjs/Rx';
 import {
-  IAgentEnvironment,
+  AgentEnvironment,
   IAgentUpdate,
   IInteraction,
   IStateUpdate,
@@ -37,5 +37,5 @@ export interface IAgent<AState, EState> {
    * @returns {Subscription} - the interaction subscription
    * @memberof IAgent
    */
-  interactWithEnvironment(env: IAgentEnvironment<AState, EState>): Subscription;
+  interactWithEnvironment(env: AgentEnvironment<AState, EState>): Subscription;
 }

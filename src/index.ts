@@ -5,10 +5,6 @@ import { HistoricalEnvironment } from './environments/historical-environment';
 import { History } from './history/history';
 import { IAgent } from './interfaces/agent';
 import { IAgentUpdate } from './interfaces/agent-update';
-import { IAgentEnvironment } from './interfaces/environments/agent-environment';
-import { IBufferedEnvironment } from './interfaces/environments/buffered-environment';
-import { IEnvironment } from './interfaces/environments/environment';
-import { IHistoricalEnvironment } from './interfaces/environments/historical-environment';
 import { IHistory } from './interfaces/history';
 import { IInteraction } from './interfaces/interaction';
 import { IStateUpdate } from './interfaces/state-update';
@@ -33,15 +29,11 @@ export { History };
 
 // interfaces
 export {
-  IHistoricalEnvironment,
   IStateUpdate,
   IAgentUpdate,
   IInteraction,
   IHistory,
 };
-
-// environment interfaces
-export { IEnvironment, IAgentEnvironment, IBufferedEnvironment };
 
 // agent interfaces
 export { IAgent };

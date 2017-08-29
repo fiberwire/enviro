@@ -3,10 +3,8 @@ import { DirectEnvironment } from './direct-environment';
 
 import * as _ from 'lodash';
 import {
-  IAgentEnvironment,
   IAgentEnvironmentOptions,
   IAgentUpdate,
-  IEnvironment,
   IEnvironmentOptions,
   IInteraction,
   IStateUpdate,
@@ -28,8 +26,7 @@ import {
 export abstract class AgentEnvironment<
   AState,
   EState
-> extends DirectEnvironment<EState>
-  implements IAgentEnvironment<AState, EState> {
+> extends DirectEnvironment<EState> {
   /**
    * This is where to send new interactions
    *

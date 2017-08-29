@@ -1,7 +1,7 @@
 import { Observable, Subscription } from 'rxjs/Rx';
 import {
+  AgentEnvironment,
   IAgent,
-  IAgentEnvironment,
   IAgentUpdate,
   IStateUpdate,
 } from '../index';
@@ -52,7 +52,7 @@ export abstract class Agent<AState, EState> implements IAgent<AState, EState> {
    * @memberof Agent
    */
   public interactWithEnvironment(
-    env: IAgentEnvironment<AState, EState>
+    env: AgentEnvironment<AState, EState>
   ): Subscription {
     return this.interactWithState(env.state.asObservable()).subscribe(i => {
       env.nextInteraction(i);
