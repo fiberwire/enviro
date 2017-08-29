@@ -8,13 +8,14 @@ export class RandomEnv extends AgentEnvironment<IRandomAState, IRandomEState> {
   public applyInteractions(
     interactionBuffer: Array<IAgentUpdate<IRandomAState>>
   ): IStateUpdate<IRandomEState> {
-    const state = _.shuffle(interactionBuffer)[0];
+    const chosen = _.shuffle(interactionBuffer)[0];
+    const state = this.state.value.state;
 
-    const sum = this.state.value.state.sum + state.state.x;
-    const mean = (this.state.value.state.mean + state.state.x) / 2;
+    const mean = (state.mean + chosen.state.x) / 2;
+    const sum = state.sum + chosen.state.x;
 
     return {
-      iteration: state.iteration,
+      iteration: chosen.iteration,
       state: {
         mean,
         sum,
