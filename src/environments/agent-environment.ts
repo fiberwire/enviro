@@ -27,27 +27,6 @@ export abstract class AgentEnvironment<
   AState,
   EState
 > extends DirectEnvironment<EState> {
-  /**
-   * This is where to send new interactions
-   *
-   * @readonly
-   * @type {Observer<IAgentUpdate<AState>>}
-   * @memberof AgentEnvironment
-   */
-  public get inputInteractions(): Observer<IAgentUpdate<AState>> {
-    return this.incomingInteractions;
-  }
-
-  /**
-   * An observable of new interactions that have yet to be applied to the Environment's state
-   *
-   * @readonly
-   * @type {Observable<IAgentUpdate<AState>>}
-   * @memberof AgentEnvironment
-   */
-  public get interactions(): Observable<IAgentUpdate<AState>> {
-    return this.incomingInteractions;
-  }
 
   /**
    * Buffers this.interactions based on this.options.interactionTime
@@ -59,7 +38,7 @@ export abstract class AgentEnvironment<
   public get bufferedInteractions(): Observable<Array<IAgentUpdate<AState>>> {
     return this.bufferInteractions(
       this.options.interactionTime,
-      this.interactions
+      this.incomingInteractions
     );
   }
 
@@ -80,20 +59,24 @@ export abstract class AgentEnvironment<
   constructor(public options: IAgentEnvironmentOptions) {
     super(options);
 
-    this.subs.add(this.interact(this.bufferedInteractions));
+    this.subs.add(this.interaction(this.bufferedInteractions));
   }
+
+  public abstract async interact(interaction: IAgentUpdate<AState>):Promise<IStateUpdate<EState>>;
 
   /**
    * Takes an interaction buffer and returns a new state update
    *
-   * @abstract
    * @param {Array<IAgentUpdate<AState>>} interactionBuffer - the interaction buffer to apply to state
    * @returns {IStateUpdate<EState>}
    * @memberof AgentEnvironment
    */
-  public abstract applyInteractions(
+  public async applyInteractions(
     interactionBuffer: Array<IAgentUpdate<AState>>
-  ): IStateUpdate<EState>;
+  ): Promise<IStateUpdate<EState>> {
+    const chosen = _.shuffle(interactionBuffer)[0];
+    return await this.interact(chosen);
+  }
 
   /**
    * Sends an interaction to the Environment
@@ -102,7 +85,7 @@ export abstract class AgentEnvironment<
    * @memberof AgentEnvironment
    */
   public nextInteraction(interaction: IAgentUpdate<AState>): void {
-    this.inputInteractions.next(interaction);
+    this.incomingInteractions.next(interaction);
   }
 
   /**
@@ -112,12 +95,13 @@ export abstract class AgentEnvironment<
    * @returns {Subscription}
    * @memberof AgentEnvironment
    */
-  public interact(
+  public interaction(
     bufferedInteractions: Observable<Array<IAgentUpdate<AState>>>
   ): Subscription {
     return bufferedInteractions
       .map(buffer => this.applyInteractions(buffer))
-      .subscribe(i => this.nextState(i));
+      .observeOn(Scheduler.asap)
+      .subscribe(async i => this.nextState(await i));
   }
 
   /**
@@ -133,8 +117,9 @@ export abstract class AgentEnvironment<
     interactions: Observable<IAgentUpdate<AState>>
   ): Observable<Array<IAgentUpdate<AState>>> {
     return this.incomingInteractions
-      .filter(i => i.iteration === this.iteration.value + 1) // only accept new interactions
+      .filter(i => i.index === this.index + 1) // only accept new interactions
       .bufferTime(interactionTime) // buffer new interactions periodically
-      .filter(i => i.length > 0); // do nothing if there are no interactions
+      .filter(i => i.length > 0) // do nothing if there are no interactions
+      .observeOn(Scheduler.asap);
   }
 }
