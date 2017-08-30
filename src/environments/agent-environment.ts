@@ -41,6 +41,8 @@ export abstract class AgentEnvironment<
     );
   }
 
+  public interactions: Subject<IInteraction<AState, EState>> = new Subject();
+
   /**
    * This is where you send new interactions
    *
@@ -76,7 +78,15 @@ export abstract class AgentEnvironment<
     interactionBuffer: Array<IAgentUpdate<AState>>
   ): Promise<IStateUpdate<EState>> {
     const chosen = _.shuffle(interactionBuffer)[0];
-    return await this.interact(chosen);
+    const i = await this.interact(chosen);
+
+    this.interactions.next({
+      interaction: chosen,
+      newState: i,
+      oldState: this.currentState,
+    })
+    
+    return i;
   }
 
   /**
