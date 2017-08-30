@@ -77,7 +77,7 @@ export class ReactiveProperty<T> {
   }
 
   public asObservable(): Observable<T> {
-    return this.asObservable().observeOn(Scheduler.asap);
+    return this.subject.observeOn(Scheduler.asap);
   }
 
   public asObserver(): Observer<T> {
