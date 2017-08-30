@@ -58,7 +58,6 @@ export class ReactiveCollection<T> {
   ): Subscription {
     return this.pushed
       .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
       .subscribe(observer);
   }
 
@@ -67,7 +66,6 @@ export class ReactiveCollection<T> {
   ): Subscription {
     return this.popped
       .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
       .subscribe(observer);
   }
 
@@ -76,7 +74,6 @@ export class ReactiveCollection<T> {
   ): Subscription {
     return this.shifted
       .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
       .subscribe(observer);
   }
 
@@ -85,7 +82,6 @@ export class ReactiveCollection<T> {
   ): Subscription {
     return this.unshifted
       .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
       .subscribe(observer);
   }
 
@@ -94,7 +90,6 @@ export class ReactiveCollection<T> {
   ): Subscription {
     return this.removed
       .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
       .subscribe(observer);
   }
 
@@ -103,7 +98,6 @@ export class ReactiveCollection<T> {
   ): Subscription {
     return this.rotated
       .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
       .subscribe(observer);
   }
 
