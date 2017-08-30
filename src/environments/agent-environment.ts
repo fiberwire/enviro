@@ -41,7 +41,7 @@ export abstract class AgentEnvironment<
     );
   }
 
-  public interactions: Subject<IInteraction<AState, EState>> = new Subject();
+  private interactions: Subject<IInteraction<AState, EState>> = new Subject();
 
   /**
    * This is where you send new interactions
@@ -87,6 +87,17 @@ export abstract class AgentEnvironment<
     })
     
     return i;
+  }
+
+  /**
+   * gets interactions made by a particular agent
+   * 
+   * @param {string} id - The ID of the agent
+   * @returns {Observable<IInteraction<AState, EState>>} - interactions made by the agent
+   * @memberof AgentEnvironment
+   */
+  public agentInteractions(id: string): Observable<IInteraction<AState, EState>> {
+    return this.interactions.filter(i => i.interaction.agentID === id);
   }
 
   /**
