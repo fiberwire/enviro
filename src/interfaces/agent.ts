@@ -2,7 +2,6 @@ import { Observable, Observer, Subscription } from 'rxjs/Rx';
 import {
   AgentEnvironment,
   IAgentUpdate,
-  IInteraction,
   IStateUpdate,
 } from '../index';
 
