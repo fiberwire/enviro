@@ -1,4 +1,4 @@
 export interface IStateUpdate<State> {
-  iteration: number;
+  index: number;
   state: State;
 }

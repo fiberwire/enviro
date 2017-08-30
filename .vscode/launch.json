@@ -39,6 +39,18 @@
       "outFiles": [
         "${workspaceRoot}/lib/*.js"
       ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug agents",
+      "program": "${workspaceRoot}/lib/examples/agents/agents.js",
+      "cwd": "${workspaceRoot}",
+      "sourceMaps": true,
+      "smartStep": true,
+      "outFiles": [
+        "${workspaceRoot}/lib/*.js"
+      ]
     }
   ]
 }

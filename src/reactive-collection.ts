@@ -56,55 +56,37 @@ export class ReactiveCollection<T> {
   public subscribeToPush(
     observer: (value: T) => void | Observer<T>
   ): Subscription {
-    return this.pushed
-      .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
-      .subscribe(observer);
+    return this.pushed.observeOn(Scheduler.asap).subscribe(observer);
   }
 
   public subscribeToPop(
     observer: (value: T) => void | Observer<T>
   ): Subscription {
-    return this.popped
-      .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
-      .subscribe(observer);
+    return this.popped.observeOn(Scheduler.asap).subscribe(observer);
   }
 
   public subscribeToShift(
     observer: (value: T) => void | Observer<T>
   ): Subscription {
-    return this.shifted
-      .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
-      .subscribe(observer);
+    return this.shifted.observeOn(Scheduler.asap).subscribe(observer);
   }
 
   public subscribeToUnshift(
     observer: (value: T) => void | Observer<T>
   ): Subscription {
-    return this.unshifted
-      .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
-      .subscribe(observer);
+    return this.unshifted.observeOn(Scheduler.asap).subscribe(observer);
   }
 
   public subscribeToRemove(
     observer: (value: T) => void | Observer<T>
   ): Subscription {
-    return this.removed
-      .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
-      .subscribe(observer);
+    return this.removed.observeOn(Scheduler.asap).subscribe(observer);
   }
 
   public subscribeToRotate(
     observer: (value: T) => void | Observer<T>
   ): Subscription {
-    return this.rotated
-      .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
-      .subscribe(observer);
+    return this.rotated.observeOn(Scheduler.asap).subscribe(observer);
   }
 
   public push(value: T): ReactiveCollection<T> {

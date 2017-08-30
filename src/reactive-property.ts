@@ -28,34 +28,31 @@ export class ReactiveProperty<T> {
   }
 
   public subscribe(observer: (value: T) => void | Observer<T>): Subscription {
-    return this.subject
-      .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
-      .subscribe(observer);
+    return this.subject.observeOn(Scheduler.asap).subscribe(observer);
   }
 
   public filter(selector: (value: T) => boolean): Observable<T> {
-    return this.subject.asObservable().filter(selector);
+    return this.asObservable().filter(selector);
   }
 
   public map<U>(selector: (value: T) => U) {
-    return this.subject.asObservable().map(selector);
+    return this.asObservable().map(selector);
   }
 
   public throttleTime(dueTime: number, scheduler?: IScheduler) {
-    return this.subject.asObservable().throttleTime(dueTime, scheduler);
+    return this.asObservable().throttleTime(dueTime, scheduler);
   }
 
   public throttle<TTimeout>(selector: (value: T) => Observable<TTimeout>) {
-    return this.subject.asObservable().throttle(selector);
+    return this.asObservable().throttle(selector);
   }
 
   public bufferTime(timeSpan: number, scheduler?: IScheduler): Observable<T[]> {
-    return this.subject.asObservable().bufferTime(timeSpan, scheduler);
+    return this.asObservable().bufferTime(timeSpan, scheduler);
   }
 
   public bufferCount(count: number, skip?: number): Observable<T[]> {
-    return this.subject.asObservable().bufferCount(count, skip);
+    return this.asObservable().bufferCount(count, skip);
   }
 
   public bufferTimeCount(
@@ -64,12 +61,15 @@ export class ReactiveProperty<T> {
     skip?: number,
     scheduler?: IScheduler
   ): Observable<T[]> {
-    const timeBuffer = this.subject
-      .asObservable()
-      .bufferTime(timeSpan, scheduler);
-    const countBuffer = this.subject.asObservable().bufferCount(count, skip);
+    const timeBuffer = this.asObservable().bufferTime(timeSpan, scheduler);
+
+    const countBuffer = this.asObservable().bufferCount(count, skip);
 
     return timeBuffer.race(countBuffer);
+  }
+
+  public take(count: number): Observable<T> {
+    return this.asObservable().take(count);
   }
 
   public zip<U>(other: Observable<U>): Observable<[T, U]> {
@@ -77,7 +77,7 @@ export class ReactiveProperty<T> {
   }
 
   public asObservable(): Observable<T> {
-    return this.subject.asObservable();
+    return this.asObservable().observeOn(Scheduler.asap);
   }
 
   public asObserver(): Observer<T> {

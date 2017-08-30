@@ -1,3 +1,2 @@
-export interface IEnvironmentOptions {
-  interactionRate?: number;
-}
+// tslint:disable-next-line:no-empty-interface
+export interface IEnvironmentOptions {}
