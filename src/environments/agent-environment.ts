@@ -84,8 +84,8 @@ export abstract class AgentEnvironment<
       interaction: chosen,
       newState: i,
       oldState: this.currentState,
-    })
-    
+    });
+
     return i;
   }
 
@@ -96,7 +96,9 @@ export abstract class AgentEnvironment<
    * @returns {Observable<IInteraction<AState, EState>>} - interactions made by the agent
    * @memberof AgentEnvironment
    */
-  public agentInteractions(id: string): Observable<IInteraction<AState, EState>> {
+  public agentInteractions(
+    id: string
+  ): Observable<IInteraction<AState, EState>> {
     return this.interactions.filter(i => i.interaction.agentID === id);
   }
 

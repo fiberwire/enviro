@@ -1,9 +1,5 @@
 import { Observable, Observer, Subscription } from 'rxjs/Rx';
-import {
-  AgentEnvironment,
-  IAgentUpdate,
-  IStateUpdate,
-} from '../index';
+import { AgentEnvironment, IAgentUpdate, IStateUpdate } from '../index';
 
 export interface IAgent<AState, EState> {
   id: string;
