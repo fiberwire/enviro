@@ -27,7 +27,6 @@ export abstract class AgentEnvironment<
   AState,
   EState
 > extends DirectEnvironment<EState> {
-
   /**
    * Buffers this.interactions based on this.options.interactionTime
    *
@@ -62,7 +61,9 @@ export abstract class AgentEnvironment<
     this.subs.add(this.interaction(this.bufferedInteractions));
   }
 
-  public abstract async interact(interaction: IAgentUpdate<AState>):Promise<IStateUpdate<EState>>;
+  public abstract async interact(
+    interaction: IAgentUpdate<AState>
+  ): Promise<IStateUpdate<EState>>;
 
   /**
    * Takes an interaction buffer and returns a new state update

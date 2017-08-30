@@ -2,15 +2,14 @@ import { RandomAgent } from './random-agent';
 import { RandomEnv } from './random-env';
 
 const env = new RandomEnv({
-  interactionTime: 333
+  interactionTime: 333,
 });
 
 console.log(`created environment`);
 
 env.states.take(100).subscribe(update => {
   console.log(
-    `[${update.index}]: sum: ${update.state.sum}, mean: ${update.state
-      .mean}`
+    `[${update.index}]: sum: ${update.state.sum}, mean: ${update.state.mean}`
   );
 });
 

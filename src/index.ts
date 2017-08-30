@@ -28,12 +28,7 @@ export { Agent };
 export { History };
 
 // interfaces
-export {
-  IStateUpdate,
-  IAgentUpdate,
-  IInteraction,
-  IHistory,
-};
+export { IStateUpdate, IAgentUpdate, IInteraction, IHistory };
 
 // agent interfaces
 export { IAgent };

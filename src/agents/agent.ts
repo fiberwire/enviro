@@ -1,10 +1,5 @@
 import { Observable, Subscription } from 'rxjs/Rx';
-import {
-  AgentEnvironment,
-  IAgent,
-  IAgentUpdate,
-  IStateUpdate,
-} from '../index';
+import { AgentEnvironment, IAgent, IAgentUpdate, IStateUpdate } from '../index';
 
 import * as Chance from 'chance';
 const chance = new Chance();

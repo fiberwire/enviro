@@ -28,9 +28,7 @@ export class ReactiveProperty<T> {
   }
 
   public subscribe(observer: (value: T) => void | Observer<T>): Subscription {
-    return this.subject
-      .observeOn(Scheduler.asap)
-      .subscribe(observer);
+    return this.subject.observeOn(Scheduler.asap).subscribe(observer);
   }
 
   public filter(selector: (value: T) => boolean): Observable<T> {
@@ -63,11 +61,9 @@ export class ReactiveProperty<T> {
     skip?: number,
     scheduler?: IScheduler
   ): Observable<T[]> {
-    const timeBuffer = this.asObservable()
-      .bufferTime(timeSpan, scheduler);
+    const timeBuffer = this.asObservable().bufferTime(timeSpan, scheduler);
 
-    const countBuffer = this.asObservable()
-      .bufferCount(count, skip);
+    const countBuffer = this.asObservable().bufferCount(count, skip);
 
     return timeBuffer.race(countBuffer);
   }
@@ -81,8 +77,7 @@ export class ReactiveProperty<T> {
   }
 
   public asObservable(): Observable<T> {
-    return this.asObservable()
-      .observeOn(Scheduler.asap);
+    return this.asObservable().observeOn(Scheduler.asap);
   }
 
   public asObserver(): Observer<T> {

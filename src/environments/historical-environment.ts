@@ -12,7 +12,9 @@ import { DirectEnvironment } from './direct-environment';
 import * as _ from 'lodash';
 import { Observable, Subject, Subscription } from 'rxjs/Rx';
 
-export abstract class HistoricalEnvironment<EState> extends DirectEnvironment<EState> {
+export abstract class HistoricalEnvironment<EState> extends DirectEnvironment<
+  EState
+> {
   public history: History<IStateUpdate<EState>>;
 
   constructor(

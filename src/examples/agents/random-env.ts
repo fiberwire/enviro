@@ -5,7 +5,9 @@ import { IRandomAState } from './random-astate';
 import { IRandomEState } from './random-estate';
 
 export class RandomEnv extends AgentEnvironment<IRandomAState, IRandomEState> {
-  public async interact(interaction: IAgentUpdate<IRandomAState>): Promise<IStateUpdate<IRandomEState>> {
+  public async interact(
+    interaction: IAgentUpdate<IRandomAState>
+  ): Promise<IStateUpdate<IRandomEState>> {
     const state = this.currentState.state;
 
     const xs = [...state.xs, interaction.state.x];
@@ -17,7 +19,7 @@ export class RandomEnv extends AgentEnvironment<IRandomAState, IRandomEState> {
       state: {
         mean,
         sum,
-        xs
+        xs,
       },
     });
   }
@@ -26,7 +28,7 @@ export class RandomEnv extends AgentEnvironment<IRandomAState, IRandomEState> {
     return {
       mean: 0,
       sum: 0,
-      xs: []
+      xs: [],
     };
   }
 }

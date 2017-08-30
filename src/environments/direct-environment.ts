@@ -1,8 +1,4 @@
-import {
-  IEnvironmentOptions,
-  IStateUpdate,
-  ReactiveProperty,
-} from '../index';
+import { IEnvironmentOptions, IStateUpdate, ReactiveProperty } from '../index';
 
 import {
   Observable,
@@ -84,7 +80,9 @@ export abstract class DirectEnvironment<EState> {
    * @type {ReactiveProperty<IStateUpdate<EState>>}
    * @memberof DirectEnvironment
    */
-  private state: ReactiveProperty<IStateUpdate<EState>> = new ReactiveProperty();
+  private state: ReactiveProperty<
+    IStateUpdate<EState>
+  > = new ReactiveProperty();
 
   /**
    * Creates an instance of DirectEnvironment.
