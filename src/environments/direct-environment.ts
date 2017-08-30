@@ -29,46 +29,8 @@ export abstract class DirectEnvironment<EState> {
    * @type {ReactiveProperty<number>}
    * @memberof DirectEnvironment
    */
-  public iteration: ReactiveProperty<number>;
-
-  /**
-   * The state of the environment. Can be subscribed to, which allows you to react to updates
-   *
-   * @type {ReactiveProperty<IStateUpdate<EState>>}
-   * @memberof DirectEnvironment
-   */
-  public state: ReactiveProperty<IStateUpdate<EState>> = new ReactiveProperty();
-
-  /**
-   * This is where to send new state updates
-   *
-   * @readonly
-   * @type {Observer<IStateUpdate<EState>>}
-   * @memberof DirectEnvironment
-   */
-  public get inputStates(): Observer<IStateUpdate<EState>> {
-    return this.incomingStates;
-  }
-
-  /**
-   * Observable of new state updates that have yet to be applied to the Environment's state.
-   *
-   * @readonly
-   * @type {Observable<IStateUpdate<EState>>}
-   * @memberof DirectEnvironment
-   */
-  public get updates(): Observable<IStateUpdate<EState>> {
-    return this.incomingStates
-      .filter(s => s.iteration === this.iteration.value + 1)
-      .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap);
-  }
-
-  public get rejectedUpdates(): Observable<IStateUpdate<EState>> {
-    return this.incomingStates
-      .filter(s => s.iteration !== this.iteration.value + 1)
-      .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap);
+  public get index(): number {
+    return this.currentState.index;
   }
 
   /**
@@ -90,16 +52,24 @@ export abstract class DirectEnvironment<EState> {
    */
   public get initialState(): IStateUpdate<EState> {
     return {
-      iteration: 0,
+      index: 0,
       state: this.defaultState,
     };
+  }
+
+  public get currentState(): IStateUpdate<EState> {
+    return this.state.value;
+  }
+
+  public get states(): Observable<IStateUpdate<EState>> {
+    return this.state.asObservable();
   }
 
   // add all subs to this, so they can be in one place and easily unsubbed
   public subs: Subscription = new Subscription();
 
   /**
-   * the backing subject for inputState and updates
+   * a subject where new states are sent before being set as the environment's state
    *
    * @private
    * @type {Subject<IStateUpdate<EState>>}
@@ -108,15 +78,23 @@ export abstract class DirectEnvironment<EState> {
   private incomingStates: Subject<IStateUpdate<EState>> = new Subject();
 
   /**
+   * The state of the environment. Can be subscribed to, which allows you to react to updates
+   *
+   * @private
+   * @type {ReactiveProperty<IStateUpdate<EState>>}
+   * @memberof DirectEnvironment
+   */
+  private state: ReactiveProperty<IStateUpdate<EState>> = new ReactiveProperty();
+
+  /**
    * Creates an instance of DirectEnvironment.
    * @param {IEnvironmentOptions} options - contains options for setting up an Environment
    * @memberof DirectEnvironment
    */
   constructor(public options: IEnvironmentOptions) {
     this.reset();
-    this.iteration = new ReactiveProperty(this.state.value.iteration);
 
-    this.subs.add(this.update(this.updates));
+    this.subs.add(this.update(this.incomingStates));
   }
 
   /**
@@ -126,25 +104,23 @@ export abstract class DirectEnvironment<EState> {
    * @memberof DirectEnvironment
    */
   public nextState(state: IStateUpdate<EState>): void {
-    this.inputStates.next(state);
+    this.incomingStates.next(state);
   }
 
   /**
    * Subscribes to stateUpdates, setting the state of the Environment
    * each time it receives a new update, and increments iteration
    *
-   * @param {Observable<IStateUpdate<EState>>} stateUpdates - stream of state updates
+   * @param {Observable<IStateUpdate<EState>>} updates - stream of state updates
    * @returns {Subscription}
    * @memberof DirectEnvironment
    */
-  public update(stateUpdates: Observable<IStateUpdate<EState>>): Subscription {
-    return stateUpdates
+  public update(updates: Observable<IStateUpdate<EState>>): Subscription {
+    return this.incomingStates
+      .filter(u => u.index === this.index + 1)
       .observeOn(Scheduler.asap)
-      .subscribeOn(Scheduler.asap)
-      .do(s => console.log(`updating env: i[${s.iteration}]`))
       .subscribe(s => {
         this.state.value = s;
-        this.iteration.value += 1;
       });
   }
 
