@@ -7,8 +7,9 @@ import * as Chance from 'chance';
 const chance = new Chance();
 
 export class RandomAgent extends Agent<IRandomAState, IRandomEState> {
-  constructor(public min: number, public max: number, id?: string) {
-    super(id);
+  constructor(public min: number, public max: number) {
+    super();
+    this.id = this.newID;
   }
 
   public interact(

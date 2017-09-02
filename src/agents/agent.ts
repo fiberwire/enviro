@@ -11,16 +11,6 @@ export abstract class Agent<AState, EState> implements IAgent<AState, EState> {
     return chance.guid();
   }
 
-  /**
-   * Creates an instance of Agent.
-   *
-   * @param {string} [id] - A unique identifier for this Agent. If one is not provided, a random id will be generated
-   * @memberof Agent
-   */
-  constructor(id?: string) {
-    this.id = id || this.newID;
-  }
-
   public abstract interact(state: IStateUpdate<EState>): IAgentUpdate<AState>;
 
   /**
