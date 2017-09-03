@@ -3,6 +3,7 @@ import { AgentEnvironment, IAgentUpdate, IStateUpdate } from '../index';
 
 export interface IAgent<AState, EState> {
   id: string;
+  interactionCount: number;
 
   /**
    * takes the state of the environment and returns an interaction
@@ -21,7 +22,7 @@ export interface IAgent<AState, EState> {
    * @memberof IAgent
    */
   interactWithStates(
-    state: Observable<IStateUpdate<EState>>
+    env: AgentEnvironment<AState, EState>
   ): Observable<IAgentUpdate<AState>>;
 
   /**
@@ -32,5 +33,8 @@ export interface IAgent<AState, EState> {
    * @returns {Subscription} - the interaction subscription
    * @memberof IAgent
    */
-  interactWithEnvironment(env: AgentEnvironment<AState, EState>, interactions: number): Subscription;
+  interactWithEnvironment(
+    env: AgentEnvironment<AState, EState>,
+    interactions: number
+  ): Subscription;
 }
