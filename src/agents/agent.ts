@@ -6,6 +6,8 @@ const chance = new Chance();
 
 export abstract class Agent<AState, EState> implements IAgent<AState, EState> {
   public id: string;
+  public interactionCount: number = 0;
+  public lastInteractionIndex: number = 0;
 
   public get newID(): string {
     return chance.guid();
@@ -21,9 +23,16 @@ export abstract class Agent<AState, EState> implements IAgent<AState, EState> {
    * @memberof Agent
    */
   public interactWithStates(
-    state: Observable<IStateUpdate<EState>>
+    env: AgentEnvironment<AState, EState>
   ): Observable<IAgentUpdate<AState>> {
-    return state.map(s => this.interact(s));
+    return env.states
+      .filter(
+        i =>
+          env.index >=
+            this.lastInteractionIndex + env.options.skipInteractions || // wait until enough other agents have interacted
+          env.index < env.options.skipInteractions // unless that many interactions haven't happened yet
+      )
+      .map(s => this.interact(s));
   }
 
   /**
@@ -37,14 +46,23 @@ export abstract class Agent<AState, EState> implements IAgent<AState, EState> {
    * @memberof Agent
    */
   public interactWithEnvironment(
-    env: AgentEnvironment<AState, EState>,
-    interactions: number
+    env: AgentEnvironment<AState, EState>
   ): Subscription {
-    return this
-      .interactWithStates(env.states)
-      .take(interactions)
+    const countInteractions = env.agentInteractions(this.id).subscribe(i => {
+      this.interactionCount += 1; // increment this.interactionCount whenever the env accepts an interaction from this agent
+      this.lastInteractionIndex = i.interaction.index;
+    });
+
+    const interact = this.interactWithStates(env)
+      .filter(
+        i =>
+          this.interactionCount < env.options.interactionsPerAgent ||
+          env.options.interactionsPerAgent <= 0
+      )
       .subscribe(i => {
         env.nextInteraction(i);
       });
+
+    return interact.add(countInteractions);
   }
 }
