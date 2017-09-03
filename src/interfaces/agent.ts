@@ -20,7 +20,7 @@ export interface IAgent<AState, EState> {
    * @returns {Observable<IAgentUpdate<AState>>}
    * @memberof IAgent
    */
-  interactWithState(
+  interactWithStates(
     state: Observable<IStateUpdate<EState>>
   ): Observable<IAgentUpdate<AState>>;
 
@@ -32,5 +32,5 @@ export interface IAgent<AState, EState> {
    * @returns {Subscription} - the interaction subscription
    * @memberof IAgent
    */
-  interactWithEnvironment(env: AgentEnvironment<AState, EState>): Subscription;
+  interactWithEnvironment(env: AgentEnvironment<AState, EState>, interactions: number): Subscription;
 }

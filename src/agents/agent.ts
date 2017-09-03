@@ -20,7 +20,7 @@ export abstract class Agent<AState, EState> implements IAgent<AState, EState> {
    * @returns {Observable<IAgentUpdate<AState>>} - interactions
    * @memberof Agent
    */
-  public interactWithState(
+  public interactWithStates(
     state: Observable<IStateUpdate<EState>>
   ): Observable<IAgentUpdate<AState>> {
     return state.map(s => this.interact(s));
@@ -37,10 +37,14 @@ export abstract class Agent<AState, EState> implements IAgent<AState, EState> {
    * @memberof Agent
    */
   public interactWithEnvironment(
-    env: AgentEnvironment<AState, EState>
+    env: AgentEnvironment<AState, EState>,
+    interactions: number
   ): Subscription {
-    return this.interactWithState(env.states).subscribe(i => {
-      env.nextInteraction(i);
-    });
+    return this
+      .interactWithStates(env.states)
+      .take(interactions)
+      .subscribe(i => {
+        env.nextInteraction(i);
+      });
   }
 }
