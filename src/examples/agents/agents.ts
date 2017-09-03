@@ -13,7 +13,8 @@ console.log(`created environment`);
 
 env.states.subscribe(update => {
   console.log(
-    `[${update.index}]: sum: ${update.state.sum} = ${update.state.previousSum} + ${update.state.x}, mean: ${update.state.mean}`
+    `[${update.index}]: sum: ${update.state.sum} = ${update.state
+      .previousSum} + ${update.state.x}, mean: ${update.state.mean}`
   );
 });
 
