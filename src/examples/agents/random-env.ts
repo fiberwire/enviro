@@ -13,12 +13,16 @@ export class RandomEnv extends AgentEnvironment<IRandomAState, IRandomEState> {
     const xs = [...state.xs, interaction.state.x];
     const mean = _.mean(xs);
     const sum = _.sum(xs);
+    const previousSum = state.sum;
+    const x = interaction.state.x;
 
     return Promise.resolve({
       index: interaction.index,
       state: {
         mean,
+        previousSum,
         sum,
+        x,
         xs,
       },
     });
@@ -27,7 +31,9 @@ export class RandomEnv extends AgentEnvironment<IRandomAState, IRandomEState> {
   public get defaultState(): IRandomEState {
     return {
       mean: 0,
+      previousSum: 0,
       sum: 0,
+      x: 0,
       xs: [],
     };
   }
